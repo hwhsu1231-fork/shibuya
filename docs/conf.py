@@ -110,26 +110,33 @@ html_theme_options = {
                 {
                     "title": _("Shibuya"),
                     "url": "https://shibuya.lepture.com/",
+                    "icon_dark": "https://shibuya.lepture.com/_static/icon-dark.svg",
+                    "icon_light": "https://shibuya.lepture.com/_static/icon-light.svg",
                     "summary": _("A responsive, good looking with modern design documentation theme for Sphinx."),
                 },
                 {
                     "title": _("Pygments Styles"),
                     "url": "https://pygments-styles.org/",
+                    "icon": "https://pygments-styles.org/_static/icon.svg",
                     "summary": _("A curated collection of Pygments styles based on VS Code themes."),
                 },
                 {
                     "title": _("Sphinx Iconify"),
                     "url": "https://sphinx-iconify.lepture.com/",
+                    "icon": "https://sphinx-iconify.lepture.com/_static/favicon.svg",
                     "summary": _("A sphinx extension to use <code>&lt;iconify-icon&gt;</code> web component."),
                 },
                 {
                     "title": _("Mistune"),
                     "url": "http://mistune.lepture.com/",
+                    "icon_dark": "https://mistune.lepture.com/en/latest/_static/dark-icon.svg",
+                    "icon_light": "https://mistune.lepture.com/en/latest/_static/light-icon.svg",
                     "summary": _("A fast yet powerful Python Markdown parser with renderers and plugins."),
                 },
                 {
                     "title": _("Wenmode"),
                     "url": "http://wenmode.lepture.com/",
+                    "icon": "https://wenmode.lepture.com/_static/wenmode-mark.svg",
                     "summary": _("A fast, composable Markdown parser and renderer toolkit."),
                 },
             ],

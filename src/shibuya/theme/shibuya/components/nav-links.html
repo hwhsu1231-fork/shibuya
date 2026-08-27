@@ -6,6 +6,16 @@
 {%- endif -%}
 {%- endmacro -%}
 
+{%- macro renderNavIcon(icon, classname) -%}
+{%- if icon.startswith(('https://', 'http://')) -%}
+<img class="{{ classname }}" src="{{ icon }}" alt="" loading="lazy">
+{%- elif ':' in icon -%}
+<iconify-icon class="{{ classname }}" icon="{{ icon }}"></iconify-icon>
+{%- else -%}
+<img class="{{ classname }}" src="{{ pathto(icon, 1) }}" alt="" loading="lazy">
+{%- endif -%}
+{%- endmacro -%}
+
 <ul>
   {%- for link in theme_nav_links -%}
     {%- if link.children %}
@@ -27,14 +37,23 @@
         {%- endif %}
         <ul id="nav-children-{{ loop.index }}" aria-labelledby="nav-trigger-{{ loop.index }}" aria-hidden="true">
           {%- for item in link.children -%}
-            {%- if item.summary -%}
-              <li><a href="{{ expandURL(item.url, item.resource) }}">
-                <span>{{ item.title }}</span>
-                <small>{{ item.summary }}</small>
-              </a></li>
-            {%- else -%}
-              <li><a href="{{ expandURL(item.url, item.resource) }}">{{ item.title }}</a></li>
-            {%- endif -%}
+            <li><a href="{{ expandURL(item.url, item.resource) }}">
+              {%- if item.icon_light -%}
+                {{ renderNavIcon(item.icon_light, 'nav-icon-light') }}
+              {%- endif -%}
+              {%- if item.icon_dark -%}
+                {{ renderNavIcon(item.icon_dark, 'nav-icon-dark') }}
+              {%- endif -%}
+              {%- if not item.icon_light and not item.icon_dark and item.icon -%}
+                {{ renderNavIcon(item.icon, 'nav-icon') }}
+              {%- endif -%}
+              <span class="nav-content">
+                <span class="nav-title">{{ item.title }}</span>
+                {%- if item.summary -%}
+                  <small>{{ item.summary }}</small>
+                {%- endif -%}
+              </span>
+            </a></li>
           {%- endfor -%}
         </ul>
       </li>

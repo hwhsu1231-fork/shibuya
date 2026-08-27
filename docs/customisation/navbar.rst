@@ -87,6 +87,56 @@ of the link:
         ]
     }
 
+Link icon
+---------
+
+The children links also support an optional ``icon`` field to display an icon before
+the link title. The value can be an image URL, a local image path, or an Iconify icon
+name (such as ``simple-icons:github``):
+
+.. code-block:: python
+    :caption: conf.py
+
+    html_theme_options = {
+        "nav_links": [
+            {
+                "title": "Projects",
+                "children": [
+                    {
+                        "title": "Pygments Styles",
+                        "url": "https://pygments-styles.org/",
+                        "icon": "https://pygments-styles.org/_static/icon.svg",
+                        "summary": "A curated collection of Pygments styles",
+                    },
+                ]
+            },
+        ]
+    }
+
+For light/dark mode aware icons, use ``icon_light`` and ``icon_dark`` instead of
+``icon``. The theme switches between them automatically based on the current
+color mode:
+
+.. code-block:: python
+    :caption: conf.py
+
+    html_theme_options = {
+        "nav_links": [
+            {
+                "title": "Projects",
+                "children": [
+                    {
+                        "title": "Shibuya",
+                        "url": "https://shibuya.lepture.com/",
+                        "icon_light": "https://shibuya.lepture.com/_static/icon-light.svg",
+                        "icon_dark": "https://shibuya.lepture.com/_static/icon-dark.svg",
+                        "summary": "Beautiful responsive theme for Sphinx",
+                    },
+                ]
+            },
+        ]
+    }
+
 External link
 -------------
 

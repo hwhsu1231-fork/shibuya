@@ -102,8 +102,35 @@
 }
 
 .sy-head-links .link > ul a {
-  display: block;
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
   white-space: normal;
+}
+
+.sy-head-links .link > ul .nav-icon,
+.sy-head-links .link > ul .nav-icon-light,
+.sy-head-links .link > ul .nav-icon-dark {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  font-size: 1.75rem;
+  margin-top: .25rem;
+  margin-left: .25rem;
+  color: var(--sy-c-light);
+}
+
+.light .sy-head-links .link > ul .nav-icon-dark {
+  display: none;
+}
+
+.dark .sy-head-links .link > ul .nav-icon-light {
+  display: none;
+}
+
+.sy-head-links .link > ul .nav-content {
+  display: flex;
+  flex-direction: column;
 }
 
 .sy-head-links .link > ul a:hover {
