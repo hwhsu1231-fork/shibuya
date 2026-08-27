@@ -69,6 +69,12 @@
           <span>{{ _('Open in Perplexity') }}</span>
         </a>
         {%- endif -%}
+        {%- if theme_open_in_deepseek -%}
+        <a role="menuitem" href="https://chat.deepseek.com/?q={{ prompt_text|urlencode }}" target="_blank" rel="nofollow">
+          <iconify-icon icon="simple-icons:deepseek"></iconify-icon>
+          <span>{{ _('Open in DeepSeek') }}</span>
+        </a>
+        {%- endif -%}
       </div>
     </div>
   </div>
