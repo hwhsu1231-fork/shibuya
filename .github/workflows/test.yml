@@ -69,4 +69,4 @@ jobs:
       run: python -m pip install Sphinx==${{ matrix.sphinx-version }}
 
     - name: Build docs
-      run: sphinx-build docs build/_html -b dirhtml
+      run: make -C docs dirhtml

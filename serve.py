@@ -39,4 +39,4 @@ class DebugServer(Server):
 app = DebugServer()
 app.watch("src", shell("make build-docs"), delay=2)
 app.watch("docs", shell("make build-docs"), delay=2)
-app.serve(root="build/_html")
+app.serve(root="docs/_build/dirhtml")

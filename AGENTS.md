@@ -33,7 +33,7 @@ uv sync
 Then build the documentation using Sphinx:
 
 ```
-uv run sphinx-build docs build/_html
+uv run make -C docs dirhtml
 ```
 
 ## Translations

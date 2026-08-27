@@ -1,5 +1,5 @@
 build-docs:
-	sphinx-build docs build/_html -b dirhtml -a
+	$(MAKE) -C docs dirhtml SPHINXOPTS="-a"
 
 build-icons:
 	node scripts/genicons.js
