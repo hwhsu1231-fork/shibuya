@@ -62,6 +62,50 @@ The ``nav_links`` can also contain ``children`` links:
         ]
     }
 
+Trigger mode
+------------
+
+By default, the children menu of a nested link opens on mouse hover.
+You can switch to the click behavior with the ``nav_links_trigger`` option:
+
+.. code-block:: python
+    :caption: conf.py
+
+    html_theme_options = {
+        "nav_links_trigger": "click",
+    }
+
+The available values are:
+
+- ``hover``: the children menu opens on mouse hover. (default)
+- ``click``: the children menu opens on click.
+
+The following table summarizes how the parent item behaves for each
+combination:
+
+.. list-table::
+   :header-rows: 1
+
+   * -
+     - ``nav_links_trigger = click``
+     - ``nav_links_trigger = hover``
+   * - Parent with ``url``
+     - The parent link navigates; clicking the chevron button toggles the children menu.
+     - Hovering the parent opens the children menu; the parent link still navigates.
+   * - Parent without ``url``
+     - Clicking the parent toggles the children menu.
+     - Hovering the parent opens the children menu.
+
+.. note::
+
+    ``nav_links_trigger`` only affects the desktop layout. On mobile, the
+    children menu is always toggled by tapping the chevron button.
+
+.. note::
+
+    When a nested link has a ``url``, the link itself always navigates to
+    that URL, and the chevron button next to it toggles the children menu.
+
 Link summary
 ------------
 

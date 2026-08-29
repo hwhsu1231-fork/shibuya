@@ -103,9 +103,11 @@ html_theme_options = {
     "carbon_ads_placement": "shibuya",
     "globaltoc_expand_depth": 1,
     "open_in_perplexity": True,
+    # "nav_links_trigger": "click",
     "nav_links": [
         {
             "title": _("Projects"),
+            # "url": "extensions/sphinx-design",
             "children": [
                 {
                     "title": _("Shibuya"),

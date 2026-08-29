@@ -17,7 +17,7 @@
       <strong>{{ project }}</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"{% if theme_nav_links_align %} data-align={{ theme_nav_links_align }}{% endif %}>
+      <nav class="sy-head-links"{% if theme_nav_links_align %} data-align={{ theme_nav_links_align }}{% endif %} data-trigger="{{ theme_nav_links_trigger or 'hover' }}">
         {%- if theme_nav_links -%}
           {% include "components/nav-links.html" %}
         {%- endif -%}
