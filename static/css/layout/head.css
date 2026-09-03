@@ -94,6 +94,15 @@
   white-space: nowrap;
 }
 
+/* a parent that has a url shows a pointer cursor */
+.sy-head-links .link > .link-row {
+  cursor: pointer;
+}
+
+.sy-head-links .link > .link-row > button {
+  cursor: pointer;
+}
+
 .sy-head-links .link i.external-link {
   font-size: 68%;
   opacity: 0.6;
@@ -107,6 +116,7 @@
 }
 
 .sy-head-links .link > ul a:hover {
+  color: var(--sy-c-link-hover);
   background: var(--sy-c-surface);
   border-radius: 6px;
 }
@@ -171,12 +181,37 @@
     margin: 0.5rem 0;
   }
 
+  /* text and chevron are styled as independent "bricks", like the globaltoc restyle */
   .sy-head-links .link > a,
   .sy-head-links .link > button,
+  .sy-head-links .link > .link-row > a,
+  .sy-head-links .link > .link-row > button {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 6px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .sy-head-links .link > a,
+  .sy-head-links .link > button {
+    justify-content: space-between;
+    column-gap: 0.5rem;
+    width: 100%;
+  }
+
+  .sy-head-links .link > a:hover,
+  .sy-head-links .link > button:hover,
+  .sy-head-links .link > .link-row > a:hover,
+  .sy-head-links .link > .link-row > button:hover {
+    color: var(--sy-c-link-hover);
+    background-color: var(--sy-c-surface);
+  }
+
+  /* parent with url: text and chevron live in two separate bricks */
   .sy-head-links .link > .link-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     column-gap: 0.5rem;
     width: 100%;
     box-sizing: border-box;
@@ -187,27 +222,15 @@
     min-width: 0;
   }
 
-  .sy-head-links .link > .js-menu,
-  .sy-head-links .link > .link-row {
-    border-radius: 6px;
-    transition: background-color 0.2s;
-  }
-
-  .sy-head-links .link > .js-menu[aria-expanded="true"],
-  .sy-head-links .link > .link-row:has(.js-menu[aria-expanded="true"]) {
-    background-color: var(--sy-c-surface);
-  }
-
-  .sy-head-links .link > .link-row:has(.js-menu[aria-expanded="true"]) > button {
+  .sy-head-links .link > .link-row > button {
+    justify-content: center;
+    flex-shrink: 0;
     align-self: stretch;
-    display: flex;
-    align-items: center;
-    border-left: 1px solid var(--sy-c-divider);
   }
 
   .sy-head-links .link i.chevron-down {
     display: inline-block;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease;
     transform: rotate(-90deg);
   }
 
@@ -217,12 +240,17 @@
   }
 
   .sy-head-links .link > ul {
-    display: none;
-    margin: 0.5rem 0 0.5rem 1rem;
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    margin: 0 0 0 1rem;
+    transition: max-height 0.3s ease, margin 0.3s ease, visibility 0.3s ease;
   }
 
   .sy-head-links .link > ul[aria-hidden="false"] {
-    display: block;
+    max-height: 1000px;
+    visibility: visible;
+    margin: 0.5rem 0 0 1rem;
   }
 
   .sy-head-extra form.searchbox {
@@ -282,6 +310,10 @@
     column-gap: 0.25rem;
   }
 
+  .sy-head-links .link > button {
+    border-radius: 6px;
+  }
+
   .sy-head-links .link > .link-row > a,
   .sy-head-links .link > .link-row > button {
     padding-left: 0;
@@ -293,19 +325,29 @@
   }
 
   .sy-head-links .link:hover > a,
+  .sy-head-links .link:hover > button,
   .sy-head-links .link:hover > .link-row {
+    color: var(--sy-c-link-hover);
     background-color: var(--sy-c-surface);
     border-radius: 6px;
   }
 
   .sy-head-links .link i.chevron-down {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    transform: rotate(-90deg);
     color: var(--sy-c-light);
+  }
+
+  .sy-head-links .link:hover i.chevron-down {
+    transform: rotate(0deg);
   }
 
   .sy-head-links .link > ul {
     position: absolute;
-    height: 0;
+    opacity: 0;
     visibility: hidden;
+    transform: translateY(-8px);
     background-color: var(--sy-c-background);
     top: var(--sy-s-navbar-height);
     margin-top: -10px;
@@ -315,12 +357,14 @@
     box-shadow: var(--sy-dropdown-shadow);
     z-index: 9;
     max-width: 320px;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   }
 
   .sy-head-links .link > ul[aria-hidden="false"],
   .sy-head-links .link:hover > ul {
-    height: auto;
+    opacity: 1;
     visibility: visible;
+    transform: translateY(0);
   }
 
   .sy-head-links .link > ul > li {

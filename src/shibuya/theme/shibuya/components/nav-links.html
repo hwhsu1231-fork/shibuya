@@ -25,7 +25,7 @@
             <i class="i-lucide chevron-down"></i>
           </button>
         {%- endif %}
-        <ul id="nav-children-{{ loop.index }}" aria-labelledby="nav-trigger-{{ loop.index }}" aria-hidden="true">
+        <ul id="nav-children-{{ loop.index }}" class="head-nav-children" aria-labelledby="nav-trigger-{{ loop.index }}" aria-hidden="true">
           {%- for item in link.children -%}
             {%- if item.summary -%}
               <li><a href="{{ expandURL(item.url, item.resource) }}">
