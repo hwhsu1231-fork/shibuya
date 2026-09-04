@@ -110,8 +110,8 @@
 }
 
 @media (width >= 64rem) {
-  .copy-page-wrapper + .yue > section > h1:first-of-type {
-    padding-right: 180px;
+  .yue .copy-page-wrapper + section {
+    clear: none;
   }
   #copy-page-content {
     right: 0;
