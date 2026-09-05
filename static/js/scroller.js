@@ -19,7 +19,7 @@ function isInSection (section) {
   } else {
     rect = section.getBoundingClientRect()
   }
-  return rect.top <= SCROLL_MARGIN_TOP && rect.bottom >= SCROLL_MARGIN_TOP
+  return rect.top <= SCROLL_MARGIN_TOP + 4 && rect.bottom >= SCROLL_MARGIN_TOP
 }
 
 function clearActiveAnchors () {
