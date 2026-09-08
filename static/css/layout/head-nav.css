@@ -8,45 +8,68 @@
   white-space: nowrap;
 }
 
-.nav-versions .chevron-down {
-  color: var(--sy-c-light);
-}
-
 @media (max-width: 767px) {
   .nav-versions,
   .nav-languages {
     width: 100%;
     background-color: var(--sy-c-surface);
     border-radius: 6px;
-    padding-bottom: 0.6rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
 
   .nav-versions button,
   .nav-languages button {
-    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 1rem;
     font-weight: 500;
-    font-size: 0.76rem;
-    color: var(--sy-c-light);
-  }
-
-  .nav-versions button > i,
-  .nav-languages button > i {
-    display: none;
-  }
-
-  .nav-versions ul {
-    padding: 0 0.6rem;
-  }
-
-  .nav-versions li {
-    padding: 0.2rem 0.4rem;
-    display: inline-block;
-  }
-
-  .nav-languages li {
     font-size: 0.94rem;
-    padding: 0.32rem 1rem;
+    color: var(--sy-c-text);
+  }
+
+  .nav-versions button iconify-icon,
+  .nav-languages button iconify-icon {
+    font-size: 1.1em;
+  }
+
+  .nav-versions button i.chevron-down,
+  .nav-languages button i.chevron-down {
+    margin-left: auto;
+    color: var(--sy-c-light);
+    transition: transform 0.2s ease;
+    transform: rotate(-90deg);
+  }
+
+  .nav-versions button[aria-expanded="true"] i.chevron-down,
+  .nav-languages button[aria-expanded="true"] i.chevron-down {
+    transform: rotate(0deg);
+  }
+
+  .nav-versions-choices,
+  .nav-languages-choices {
+    display: none;
+    padding: 0.5rem 1rem 0.75rem;
+  }
+
+  .nav-versions-choices[aria-hidden="false"],
+  .nav-languages-choices[aria-hidden="false"] {
+    display: block;
+  }
+
+  .nav-versions li,
+  .nav-languages li {
+    padding: 0.32rem 0;
+  }
+
+  .nav-versions a,
+  .nav-languages a {
+    display: block;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.94rem;
+    color: var(--sy-c-text);
   }
 }
 
@@ -66,6 +89,11 @@
   .nav-versions button {
     padding: 0 0.5rem;
     border-right: 1px solid var(--gray-3);
+  }
+
+  .nav-versions button i.chevron-down,
+  .nav-languages button i.chevron-down {
+    display: none;
   }
 
   .nav-versions-choices,
@@ -109,5 +137,10 @@
     color: var(--sy-c-link-hover);
     background: var(--sy-c-surface);
     border-radius: 6px;
+  }
+
+  .nav-versions .rtd-current-item a,
+  .nav-languages .rtd-current-item a {
+    color: var(--sy-c-link);
   }
 }

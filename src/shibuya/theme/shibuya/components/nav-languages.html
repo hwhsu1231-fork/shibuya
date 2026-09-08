@@ -1,10 +1,11 @@
-{%- if languages -%}
+{%- if languages or READTHEDOCS -%}
 <div class="nav-languages">
-  <button type="button">
-    <span class="md:hidden">{{ _("Translations") }}</span>
+  <button type="button" class="js-menu" aria-controls="nav-languages-choices" aria-expanded="false" aria-label="{{ _("Languages") }}">
     <iconify-icon icon="lucide:languages"></iconify-icon>
+    <span class="md:hidden">{{ _("Languages") }}</span>
+    <i class="i-lucide chevron-down"></i>
   </button>
-  <div class="nav-languages-choices">
+  <div class="nav-languages-choices" id="nav-languages-choices" aria-hidden="true">
     <ul>
       {%- for item in languages -%}
         <li><a href="{{ i18n_link(item[1]) }}">{{ item[0] }}</a></li>

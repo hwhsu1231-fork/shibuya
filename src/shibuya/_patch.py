@@ -196,6 +196,14 @@ def _create_view_source_link(config: Config):
 
 def _add_readthedocs_context():
     context: Dict[str, Any] = {}
+    is_readthedocs = os.environ.get("READTHEDOCS", "") == "True"
+    context["READTHEDOCS"] = is_readthedocs
+    if is_readthedocs:
+        # Expose Read the Docs environment variables to the templates:
+        # https://docs.readthedocs.io/en/stable/reference/environment-variables.html
+        for key, value in os.environ.items():
+            if key.startswith("READTHEDOCS_"):
+                context[key] = value
     project_slug = os.environ.get("READTHEDOCS_PROJECT")
     if project_slug:
         context["theme_readthedocs_url"] = f"https://readthedocs.org/projects/{project_slug}"

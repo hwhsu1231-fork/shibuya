@@ -25,11 +25,75 @@ const searchBoxStyle = `
 }
 `
 
+function renderVersions(config) {
+  if (!config.versions || !config.versions.active || !config.versions.active.length) {
+    return
+  }
+
+  const container = document.querySelector(".nav-versions")
+  if (!container) return
+
+  const list = container.querySelector(".nav-versions-choices ul")
+  if (!list) return
+
+  let versions = config.versions.active.slice()
+  if (
+    config.versions.current &&
+    !versions.some((version) => version.slug === config.versions.current.slug)
+  ) {
+    versions = [config.versions.current].concat(versions)
+  }
+
+  list.innerHTML = versions
+    .map(
+      (version) => `
+        <li${version.slug === config.versions.current.slug ? ' class="rtd-current-item"' : ""}>
+          <a href="${version.urls.documentation}">${version.slug}</a>
+        </li>`,
+    )
+    .join("")
+}
+
+function renderLanguages(config) {
+  if (
+    !config.projects ||
+    !config.projects.translations ||
+    !config.projects.translations.length
+  ) {
+    return
+  }
+
+  const container = document.querySelector(".nav-languages")
+  if (!container) return
+
+  let languages = config.projects.translations.concat(config.projects.current)
+  languages = languages.sort((a, b) =>
+    a.language.name.localeCompare(b.language.name),
+  )
+
+  const list = container.querySelector(".nav-languages-choices ul")
+  if (!list) return
+
+  list.innerHTML = languages
+    .map(
+      (language) => `
+        <li${language.slug === config.projects.current.slug ? ' class="rtd-current-item"' : ""}>
+          <a href="${language.urls.documentation}">${language.language.name}</a>
+        </li>`,
+    )
+    .join("")
+}
+
 document.addEventListener("readthedocs-addons-data-ready", function (event) {
-  document.querySelector(".searchbox input").addEventListener("focusin", () => {
-    const event = new CustomEvent("readthedocs-search-show")
-    document.dispatchEvent(event)
-  })
+  const config = event.detail && event.detail.data ? event.detail.data() : {}
+
+  const searchInput = document.querySelector(".searchbox input")
+  if (searchInput) {
+    searchInput.addEventListener("focusin", () => {
+      const event = new CustomEvent("readthedocs-search-show")
+      document.dispatchEvent(event)
+    })
+  }
   setTimeout(() => {
     const rtdSearchElement = document.querySelector("readthedocs-search")
     if (rtdSearchElement) {
@@ -38,4 +102,7 @@ document.addEventListener("readthedocs-addons-data-ready", function (event) {
       rtdSearchElement.shadowRoot.appendChild(style)
     }
   }, 1000)
+
+  renderVersions(config)
+  renderLanguages(config)
 });
