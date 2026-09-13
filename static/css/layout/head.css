@@ -335,4 +335,10 @@
     height: auto;
     padding: 0.5rem;
   }
+
+  .sy-head-actions .theme-switch:hover {
+    color: var(--sy-c-link-hover);
+    background-color: var(--sy-c-surface);
+    border-radius: 6px;
+  }
 }
