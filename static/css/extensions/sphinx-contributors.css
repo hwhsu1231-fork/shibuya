@@ -14,13 +14,19 @@
 }
 
 .sphinx-contributors.sphinx-contributors--avatars .sphinx-contributors_list {
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 150px);
+  justify-content: space-evenly;
   padding: 0;
   row-gap: 1rem;
   column-gap: 1rem;
 }
 .sphinx-contributors--avatars .sphinx-contributors_contributor__username {
   margin-top: 0.5rem;
+  /* Prevent long usernames from stretching the item width */
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .sphinx-contributors--avatars .sphinx-contributors_contributor__contributions {
   font-size: 0.875rem;
@@ -30,40 +36,46 @@
   padding: 0;
 }
 
+.sphinx-contributors--avatars .sphinx-contributors_contributor__image {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  max-width: 100%;
+}
+
+.sphinx-contributors--avatars .sphinx-contributors_list__item {
+  /* Match the default image width so all items in the grid have the same width */
+  width: 150px;
+}
+
 .sphinx-contributors--avatars .sphinx-contributors_contributor {
   align-items: center;
 }
 
-@container contributors (max-width: 800px) {
-  .sphinx-contributors.sphinx-contributors--avatars .sphinx-contributors_list {
-    column-gap: 0;
-  }
-
-  .sphinx-contributors--avatars .sphinx-contributors_list__item {
-    flex-basis: 25%;
-  }
-}
-
+/* Override original extension CSS with container queries.
+   Must use .sphinx-contributors_list__item context to beat specificity
+   of the extension's own .sphinx-contributors--avatars .sphinx-contributors_contributor__image */
 @container contributors (max-width: 700px) {
-  .sphinx-contributors--avatars img.sphinx-contributors_contributor__image {
-    width: 120px;
+  .sphinx-contributors.sphinx-contributors--avatars .sphinx-contributors_list {
+    grid-template-columns: repeat(auto-fill, 120px);
   }
-}
-
-@container contributors (max-width: 600px) {
   .sphinx-contributors--avatars .sphinx-contributors_list__item {
-    flex-basis: 33.33%;
-  }
-}
-
-@container contributors (max-width: 500px) {
-  .sphinx-contributors--avatars img.sphinx-contributors_contributor__image {
     width: 120px;
+  }
+  .sphinx-contributors--avatars .sphinx-contributors_list__item img.sphinx-contributors_contributor__image {
+    width: 120px;
+    height: 120px;
   }
 }
 
 @container contributors (max-width: 400px) {
+  .sphinx-contributors.sphinx-contributors--avatars .sphinx-contributors_list {
+    grid-template-columns: repeat(auto-fill, 100px);
+  }
   .sphinx-contributors--avatars .sphinx-contributors_list__item {
-    flex-basis: 50%;
+    width: 100px;
+  }
+  .sphinx-contributors--avatars .sphinx-contributors_list__item img.sphinx-contributors_contributor__image {
+    width: 100px;
+    height: 100px;
   }
 }
