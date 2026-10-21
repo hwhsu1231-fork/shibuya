@@ -14,18 +14,15 @@ function bindButtonEvent(button) {
     e.stopPropagation()
 
     const components = getExpandedComponents()
-    const index = components.indexOf(id)
     if (content.getAttribute('aria-hidden') === 'false') {
-      components.splice(index, 1)
-      document.body.setAttribute('data-expanded', components.join(' '))
-      content.setAttribute('aria-hidden', 'true')
-      setButtonExpanded(id, 'false')
+      collapse(id)
     } else {
       components.push(id)
       document.body.setAttribute('data-expanded', components.join(' '))
       content.setAttribute('aria-hidden', 'false')
       setButtonExpanded(id, 'true')
     }
+    syncHeadDropdownHeight(content)
   })
 }
 
@@ -48,11 +45,70 @@ function getExpandedComponents() {
   return expanded.split(/\s+/)
 }
 
+function collapse(id) {
+  const components = getExpandedComponents()
+  const index = components.indexOf(id)
+  if (index === -1) {
+    return
+  }
+  components.splice(index, 1)
+  document.body.setAttribute('data-expanded', components.join(' '))
+  const content = document.getElementById(id)
+  if (content) {
+    content.setAttribute('aria-hidden', 'true')
+  }
+  setButtonExpanded(id, 'false')
+}
+
+function isMobileViewport() {
+  return window.matchMedia('(max-width: 767px)').matches
+}
+
+/**
+ * Keep nav-links dropdowns in sync with their content height so the
+ * expand/collapse transition animates precisely, like the globaltoc.
+ * @param {HTMLElement} [target]
+ */
+function syncHeadDropdownHeight(target) {
+  const dropdowns = target
+    ? [target]
+    : document.querySelectorAll('.head-nav-children')
+  dropdowns.forEach((el) => {
+    if (!el.classList.contains('head-nav-children')) {
+      return
+    }
+    if (!isMobileViewport()) {
+      el.style.maxHeight = ''
+      return
+    }
+    if (el.getAttribute('aria-hidden') === 'false') {
+      el.style.maxHeight = el.scrollHeight + 'px'
+    } else {
+      el.style.maxHeight = '0px'
+    }
+  })
+}
+
 /** @type {NodeListOf<HTMLButtonElement>} */
 const menuButtons = document.querySelectorAll('.js-menu')
 for (let i = 0; i < menuButtons.length; i++) {
   bindButtonEvent(menuButtons[i])
 }
+
+// On desktop, nav-links dropdowns are hover-driven: close them when the
+// pointer leaves the item so a single click does not keep them pinned open.
+document.querySelectorAll('.sy-head-links .link').forEach((link) => {
+  link.addEventListener('mouseleave', () => {
+    if (isMobileViewport()) {
+      return
+    }
+    const button = link.querySelector('.js-menu')
+    if (!button) {
+      return
+    }
+    collapse(button.getAttribute('aria-controls'))
+  })
+})
 
 document.body.addEventListener('click', () => {
   const components = getExpandedComponents()
@@ -62,4 +118,9 @@ document.body.addEventListener('click', () => {
     content.setAttribute('aria-hidden', 'true')
     setButtonExpanded(id, 'false')
   })
+  syncHeadDropdownHeight()
+})
+
+window.addEventListener('resize', () => {
+  syncHeadDropdownHeight()
 })
